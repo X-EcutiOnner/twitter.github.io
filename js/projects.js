@@ -1,3 +1,8 @@
+/**
+ * Copyright 2018 Twitter, Inc.
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
 // Put custom repo GitHub URLs in this object, keyed by nameWithOwner repo name.
 var customGithubURL = {
     "twitter/pants": "https://github.com/pantsbuild/pants",
@@ -38,7 +43,7 @@ var renderProjects = function(projectsList, searchString="") {
             // Color-coded border
             var colorDiv = document.createElement('div')
             colorDiv.className = "border small-margin"
-            colorDiv.style = "border-bottom-color: " + project.color
+            colorDiv.style.borderBottomColor = project.color
             projectDiv.appendChild(colorDiv)
 
             // Project Description (HTML version)
@@ -48,10 +53,12 @@ var renderProjects = function(projectsList, searchString="") {
             projectDiv.appendChild(descriptionDiv)
 
             // Primary Language
-            var languageDiv = document.createElement('p')
-            languageDiv.className = "project-language"
-            languageDiv.innerHTML = project.primaryLanguage
-            projectDiv.appendChild(languageDiv)
+            if (project.primaryLanguage) {
+                var languageDiv = document.createElement('p')
+                languageDiv.className = "project-language"
+                languageDiv.innerHTML = project.primaryLanguage
+                projectDiv.appendChild(languageDiv)
+            }
 
             // Whitespace
             var whitespaceDiv = document.createElement('div')
@@ -82,9 +89,8 @@ var renderProjects = function(projectsList, searchString="") {
             projectDiv.appendChild(projectLinksDiv)
 
             // Metrics button
-            var metricsButton = document.createElement('button')
-            metricsButton.setAttribute("onclick", "window.open('https://opensource.twitter.com/metrics/" + project.nameWithOwner + "/WEEKLY')")
-            metricsButton.type = "button"
+            var metricsButton = document.createElement('a')
+            metricsButton.setAttribute("href", "https://opensource.twitter.com/metrics/" + project.nameWithOwner + "/WEEKLY")
             metricsButton.className = "Button Button--tertiary"
             metricsButton.innerHTML = "Metrics"
             projectDiv.appendChild(metricsButton)
